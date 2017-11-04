@@ -63,7 +63,67 @@ function loadSexta() {
   
 }
 </script>
+<script language="JavaScript">
 
+var NS4 = (document.layers);    
+var IE4 = (document.all);
+
+var win = window;    
+var n   = 0;
+
+function findInPage(str) {
+
+  var txt, i, found;
+
+  if (str == "")
+    return false;
+
+  if (NS4) {
+
+    if (!win.find(str))
+      while(win.find(str, false, true))
+        n++;
+    else
+      n++;
+
+    if (n == 0)
+      alert("Não foram encontrados resultados para sua pesquisa. \n Tente reduzir ou modificar suas palavras-chaves.");
+  }
+
+  if (IE4) {
+    txt = win.document.body.createTextRange();
+
+    for (i = 0; i <= n && (found = txt.findText(str)) != false; i++) {
+      txt.moveStart("character", 1);
+      txt.moveEnd("textedit");
+    }
+
+    if (found) {
+      txt.moveStart("character", -1);
+      txt.findText(str);
+      txt.select();
+      txt.scrollIntoView();
+      n++;
+    }
+
+    else {
+      if (n > 0) {
+        n = 0;
+        findInPage(str);
+      }
+
+      else
+        alert("Não foram encontrados resultados para sua pesquisa. \n Tente reduzir ou modificar suas palavras-chaves.");
+    }
+  }
+
+  return false;
+}
+
+</script>
+
+<meta name="text:Search Label" content="" />
+<script type="text/javascript" src="http://static.tumblr.com/p2evvtm/Wycm17d1m/tumblr_search_box.js"></script>
 
 
 	<!-- Basic Page Needs
@@ -118,7 +178,7 @@ function loadSexta() {
             <header id="top">
             	<div class="row">
                     <div class="three columns">
-                        <div class="top-text"><span class="bg-left"></span><span class="bg-right">Funcionamento: Segunda-Sexta:11:00 às 13:30 e 17:30 às 18:30</span></div>
+                        <div class="top-text"></div>
                     </div>
                     <div class="six columns">
                     	
@@ -131,9 +191,9 @@ function loadSexta() {
                       
                     </div>
                     <div class="three columns">
-                        <form action="#" id="searchform" method="get">
+                        <form action="pesquisa.php" id="searchform" onSubmit="return findInPage(this.string.value);"method="get">
                             <span class="bg-left"></span>
-                            <div class="bg-right">
+                            <div class="bg-right">					
                             <input type="text" name="s" id="s" value="Pesquisa" onFocus="if (this.value == 'Pesquisa')this.value = '';" onBlur="if (this.value == '')this.value = 'Pesquisa';" /> 
                             <input type="submit" class="searchbutton" value="" />
                             </div>
@@ -297,7 +357,7 @@ function loadSexta() {
                 <div class="container">
                 	<div class="row">
                         <div id="copyright" class="six columns">
-                            Copyright &copy; 2017 Restaurante Universitário- Instituto Federal Do Sudeste de Minas Gerais- Campus Juiz de Fora
+                            Copyright &copy; 2017 Restaurante Universitário- Instituto Federal Do Sudeste de Minas Gerais- Campus Juiz de Fora- Flávio Henrique,Laís Alves e Jonathas Martins.
                         </div>
                         
                     </div>
